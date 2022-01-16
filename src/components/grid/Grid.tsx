@@ -9,7 +9,7 @@ type Props = {
 
 export const Grid = ({ guesses, currentGuess }: Props) => {
   const empties =
-    guesses.length < 5 ? Array.from(Array(5 - guesses.length)) : [];
+    guesses.length < 5 ? Array.from(Array(6 - guesses.length)) : [];
 
   return (
     <div className="pb-6">

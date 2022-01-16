@@ -7,16 +7,9 @@ import { AboutModal } from "./components/modals/AboutModal";
 import { InfoModal } from "./components/modals/InfoModal";
 import { WinModal } from "./components/modals/WinModal";
 import { isWordInWordList, isWinningWord, solution } from "./lib/words";
-import {
-  loadGameStateFromLocalStorage,
-  saveGameStateToLocalStorage,
-} from "./lib/localStorage";
 
 function App() {
-  const [guesses, setGuesses] = useState<string[]>(() => {
-    const loaded = loadGameStateFromLocalStorage();
-    return loaded?.solution === solution ? loaded.guesses : [];
-  });
+  const [guesses, setGuesses] = useState<string[]>([]);
   const [currentGuess, setCurrentGuess] = useState("");
   const [isGameWon, setIsGameWon] = useState(false);
   const [isWinModalOpen, setIsWinModalOpen] = useState(false);
@@ -27,17 +20,13 @@ function App() {
   const [shareComplete, setShareComplete] = useState(false);
 
   useEffect(() => {
-    saveGameStateToLocalStorage({ guesses, solution });
-  }, [guesses]);
-
-  useEffect(() => {
     if (isGameWon) {
       setIsWinModalOpen(true);
     }
   }, [isGameWon]);
 
   const onChar = (value: string) => {
-    if (currentGuess.length < 5 && guesses.length < 6) {
+    if (currentGuess.length < 6 && guesses.length < 7) {
       setCurrentGuess(`${currentGuess}${value}`);
     }
   };
@@ -56,7 +45,7 @@ function App() {
 
     const winningWord = isWinningWord(currentGuess);
 
-    if (currentGuess.length === 5 && guesses.length < 6 && !isGameWon) {
+    if (currentGuess.length === 6 && guesses.length < 7 && !isGameWon) {
       setGuesses([...guesses, currentGuess]);
       setCurrentGuess("");
 
@@ -86,7 +75,7 @@ function App() {
         variant="success"
       />
       <div className="flex w-80 mx-auto items-center mb-8">
-        <h1 className="text-xl grow font-bold">Not Wordle</h1>
+        <h1 className="text-xl grow font-bold">Clue #1</h1>
         <InformationCircleIcon
           className="h-6 w-6 cursor-pointer"
           onClick={() => setIsInfoModalOpen(true)}

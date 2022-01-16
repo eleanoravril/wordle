@@ -1,11 +1,8 @@
 import { getGuessStatuses } from "./statuses";
-import { solutionIndex } from "./words";
 
 export const shareStatus = (guesses: string[]) => {
   navigator.clipboard.writeText(
-    "Wordle " +
-      solutionIndex +
-      " " +
+    "Wordle 24 " +
       guesses.length +
       "/6\n\n" +
       generateEmojiGrid(guesses)
